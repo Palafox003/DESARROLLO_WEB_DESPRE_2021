@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/ejemplo1', function () {
+    return 'Hola todos';
+});
+
+Route::get('/palafox', function () {
+    return 'Hola palafox';
+});
+
+Route::get('saludos/{nombre?}', function ($nombre=" por favor escribe tu nombre") {
+    return 'Hola '.$nombre;
+});
