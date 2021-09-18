@@ -28,3 +28,7 @@ Route::get('/palafox', function () {
 Route::get('saludos/{nombre?}', function ($nombre=" por favor escribe tu nombre") {
     return 'Hola '.$nombre;
 });
+
+Route::get('/ejemplo2', 'ejemplo1@index');
+
+Route::resource('/productos','ProductosController');
