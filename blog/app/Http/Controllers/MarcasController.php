@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Producto;
 use App\Marca;
 
-class ProductosController extends Controller
+class MarcasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,17 +15,9 @@ class ProductosController extends Controller
     public function index()
     {
         //
-        $productos=Producto::all();
+        $marcas=Marca::all();
 
-        return view('productos.productos',['productos'=>$productos]);
-    }
-
-    public function buscar(Request $request){
-        $buscar=$request->buscar;
-
-        $productos=Producto::where('nombre','like',$buscar)->get();
-
-         return view('productos.productos',['productos'=>$productos]);
+        return view('marcas.marcas',['marcas'=>$marcas]);
     }
 
     /**
@@ -37,9 +28,8 @@ class ProductosController extends Controller
     public function create()
     {
         //
-        $marcas=Marca::all();
 
-        return view('productos.nuevoProducto',['marcas'=>$marcas]);
+        return view('marcas.nuevaMarca');
     }
 
     /**
@@ -51,17 +41,14 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         //
-        $path = $request->file('img')->store('productos');
+        $path = $request->file('logo')->store('logos');
 
-        $producto=new Producto;
-            $producto->nombre=$request->nombre;
-            $producto->marca_id=$request->marca;
-            $producto->descripcion=$request->descripcion;
-            $producto->costo=$request->costo;
-            $producto->img=$path;
-        $producto->save();
+         $marca=new Marca();
+            $marca->nombre=$request->nombre;
+            $marca->logo=$path;
+         $marca->save();
 
-        return $request;
+        return ('Datos Guardados.');
     }
 
     /**
@@ -84,9 +71,9 @@ class ProductosController extends Controller
     public function edit($id)
     {
         //
-        $producto=Producto::find($id);
+        $marca=Marca::find($id);
 
-        return view('productos.EditarProducto',['producto'=>$producto]);
+        return view('marcas.editarMarca',['marca'=>$marca]);
     }
 
     /**
@@ -99,14 +86,13 @@ class ProductosController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $producto=Producto::find($id);
-            $producto->nombre=$request->nombre;
-            $producto->marca=$request->marca;
-            $producto->descripcion=$request->descripcion;
-            $producto->costo=$request->costo;
-        $producto->save();
+        $path = $request->file('logo')->store('logos');
+        $marca=Marca::find($id);
+            $marca->nombre=$request->nombre;
+            $marca->logo=$path;
+        $marca->save();
 
-        return redirect('/productos');
+        return redirect('/marcas');
     }
 
     /**
@@ -118,9 +104,5 @@ class ProductosController extends Controller
     public function destroy($id)
     {
         //
-        $producto=Producto::find($id);
-            $producto->delete();
-
-        return redirect('/productos');
     }
 }

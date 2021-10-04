@@ -32,3 +32,9 @@ Route::get('saludos/{nombre?}', function ($nombre=" por favor escribe tu nombre"
 Route::get('/ejemplo2', 'ejemplo1@index');
 
 Route::resource('/productos','ProductosController');
+	Route::post('/productos/buscar','ProductosController@buscar');
+Route::resource('/marcas','MarcasController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
